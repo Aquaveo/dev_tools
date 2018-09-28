@@ -1,0 +1,3 @@
+[settings]
+compiler=apple-clang
+compiler.version=9.0
