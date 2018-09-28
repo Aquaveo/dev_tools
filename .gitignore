@@ -1,0 +1,50 @@
+# Misc
+*.DS_STORE
+*~
+
+# IDE Files
+.*.swp
+*.swo
+.lvimrc
+.idea
+.vcode
+
+# Python
+*.pyc
+*.pyd
+
+# Documentation
+doc/_build*
+
+# Build Files
+build/
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
