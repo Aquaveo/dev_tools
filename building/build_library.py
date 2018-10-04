@@ -105,7 +105,9 @@ def get_args():
 
         # Profiles
         precompile_profiles = {}
-        for root, subdir, files in os.walk('..\\profiles'):
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        profile_path = os.path.join(script_dir, '..', 'profiles')
+        for root, subdir, files in os.walk(profile_path):
             for f in files:
                 precompile_profiles[f] = os.path.abspath(os.path.join(root, f))
         if not parsed_args.profile in precompile_profiles.keys():
