@@ -5,7 +5,6 @@ Run python conan tests for conan package
 import argparse
 import os
 import re
-import subprocess
 import sys
 import unittest
 
