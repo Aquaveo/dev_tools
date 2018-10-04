@@ -6,8 +6,6 @@ import argparse
 import os
 import re
 import subprocess
-import sys
-
 
 GENERATORS = {
     'make': None,
@@ -107,7 +105,7 @@ def get_args():
         precompile_profiles = {}
         script_dir = os.path.dirname(os.path.abspath(__file__))
         profile_path = os.path.join(script_dir, '..', 'profiles')
-        for root, subdir, files in os.walk(profile_path):
+        for root, _, files in os.walk(profile_path):
             for f in files:
                 precompile_profiles[f] = os.path.abspath(os.path.join(root, f))
         if not parsed_args.profile in precompile_profiles.keys():
@@ -117,9 +115,10 @@ def get_args():
 
         # Generators
         if parsed_args.generator not in GENERATORS:
-            msg = 'specified generator not supported "{}". Must be one of [{}]'.format(
-                      parsed_args.generator, ", ".join(GENERATORS.keys())
-            )
+            msg = 'specified generator not supported "{}". ' \
+                      'Must be one of [{}]'.format(
+                          parsed_args.generator, ", ".join(GENERATORS.keys())
+                          )
             raise TypeError(msg)
 
     return parsed_args
@@ -148,9 +147,12 @@ def get_cmake_options(_build_dir):
             if o:
                 conan_options[o.group(1)] = o.group(2)
     cmake_options = []
-    cmake_options.append('-DBUILD_TESTING={}'.format(conan_options.get('testing', 'False')))
-    cmake_options.append('-DIS_PYTHON_BUILD={}'.format(conan_options.get('pybind', 'False')))
-    cmake_options.append('-DXMS_BUILD={}'.format(conan_options.get('xms', 'False')))
+    cmake_options.append('-DBUILD_TESTING={}'.format(
+        conan_options.get('testing', 'False')))
+    cmake_options.append('-DIS_PYTHON_BUILD={}'.format(
+        conan_options.get('pybind', 'False')))
+    cmake_options.append('-DXMS_BUILD={}'.format(
+        conan_options.get('xms', 'False')))
 
     uses_python = conan_options.get('pybind', 'False')
     if uses_python != 'False':
@@ -181,5 +183,5 @@ def run_cmake(_cmake_dir, _build_dir, _generator, _cmake_options):
 if __name__ == "__main__":
     args = get_args()
     conan_install(args.profile, args.cmake_dir, args.build_dir)
-    cmake_options = get_cmake_options(args.build_dir)
-    run_cmake(args.cmake_dir, args.build_dir, args.generator, cmake_options)
+    my_cmake_options = get_cmake_options(args.build_dir)
+    run_cmake(args.cmake_dir, args.build_dir, args.generator, my_cmake_options)
