@@ -1,4 +1,0 @@
-include(../base/gcc_5)
-include(../base/debug)
-include(../base/x64)
-include(../base/pybind)
