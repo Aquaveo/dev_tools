@@ -1,3 +1,4 @@
 [settings]
 compiler=Visual Studio
 compiler.version=14
+os=Windows
