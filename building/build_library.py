@@ -126,12 +126,19 @@ def get_args():
 
 
 def conan_install(_profile, _cmake_dir, _build_dir):
+    print("------------------------------------------------------------------")
+    print(" Generating conan info")
+    print("------------------------------------------------------------------")
     subprocess.call([
         'conan', 'install', '-if', _build_dir,
         '-pr', _profile, _cmake_dir
     ])
+    os.system("pause")
 
 def get_cmake_options(_build_dir):
+    print("------------------------------------------------------------------")
+    print(" Setting up cmake options")
+    print("------------------------------------------------------------------")
     conan_options = {}
     conan_option_re = r'(pybind|testing|xms){1}=(True|False)'
     conan_info_file = os.path.join(_build_dir, 'conaninfo.txt')
@@ -144,9 +151,23 @@ def get_cmake_options(_build_dir):
     cmake_options.append('-DBUILD_TESTING={}'.format(conan_options.get('testing', 'False')))
     cmake_options.append('-DIS_PYTHON_BUILD={}'.format(conan_options.get('pybind', 'False')))
     cmake_options.append('-DXMS_BUILD={}'.format(conan_options.get('xms', 'False')))
+
+    uses_python = conan_options.get('pybind', 'False')
+    if uses_python != 'False':
+        python_target_version = input('Target Python Version [3.6]:') or "3.6"
+        cmake_options.append('-DPYTHON_TARGET_VERSION={}'.format(
+            python_target_version
+        ))
+    print("Cmake Options:")    
+    for o in cmake_options:
+        print("\t{}".format(o))
+    os.system("pause")
     return cmake_options
 
 def run_cmake(_cmake_dir, _build_dir, _generator, _cmake_options):
+    print("------------------------------------------------------------------")
+    print(" Running cmake")
+    print("------------------------------------------------------------------")
     cmd = ['cmake']
     gen = GENERATORS[_generator]
     if gen:
@@ -155,6 +176,7 @@ def run_cmake(_cmake_dir, _build_dir, _generator, _cmake_options):
     cmd.append(_cmake_dir)
     os.chdir(_build_dir)
     subprocess.run(cmd)
+    os.system("pause")
 
 if __name__ == "__main__":
     args = get_args()
