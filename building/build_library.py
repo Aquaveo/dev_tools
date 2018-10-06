@@ -83,6 +83,14 @@ def get_args():
     )
     parsed_args = arguments.parse_args()
 
+    # Profiles
+    precompile_profiles = {}
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    profile_path = os.path.join(script_dir, '..', 'profiles')
+    for root, _, files in os.walk(profile_path):
+        for f in files:
+            precompile_profiles[f] = os.path.abspath(os.path.join(root, f))
+
     if not parsed_args.cmake_dir or not parsed_args.build_dir \
             or parsed_args.profile or not parsed_args.generator:
         parsed_args.cmake_dir = input("CMakeList.txt location [{}]:".format(
@@ -91,9 +99,11 @@ def get_args():
         parsed_args.build_dir = input("build location [{}]:".format(
             parsed_args.build_dir or '.'
         )) or '.'
+        print("Available Profiles: {}".format(', '.join(precompile_profiles.keys())))
         parsed_args.profile = input("profile [{}]:".format(
             parsed_args.profile or '.\\default'
         )) or '.\\default'
+        print("Available Generators: {}".format(', '.join(GENERATORS.keys())))
         parsed_args.generator = input("generator [{}]".format(
             parsed_args.generator or 'make'
         )) or 'make'
@@ -101,13 +111,6 @@ def get_args():
         parsed_args.cmake_dir = is_dir(parsed_args.cmake_dir)
         parsed_args.build_dir = is_dir(parsed_args.build_dir)
 
-        # Profiles
-        precompile_profiles = {}
-        script_dir = os.path.dirname(os.path.abspath(__file__))
-        profile_path = os.path.join(script_dir, '..', 'profiles')
-        for root, _, files in os.walk(profile_path):
-            for f in files:
-                precompile_profiles[f] = os.path.abspath(os.path.join(root, f))
         if not parsed_args.profile in precompile_profiles.keys():
             parsed_args.profile = is_file(parsed_args.profile)
         else:
@@ -160,6 +163,8 @@ def get_cmake_options(_build_dir):
         cmake_options.append('-DPYTHON_TARGET_VERSION={}'.format(
             python_target_version
         ))
+    lib_version = input('Library Version [99.99.99]:') or "99.99.99"
+    cmake_options.append('-DXMS_VERSION={}'.format(lib_version))
     print("Cmake Options:")    
     for o in cmake_options:
         print("\t{}".format(o))
