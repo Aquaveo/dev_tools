@@ -164,7 +164,7 @@ def get_cmake_options(_build_dir):
             python_target_version
         ))
     lib_version = input('Library Version [99.99.99]:') or "99.99.99"
-    cmake_options.append('-DXMS_VERSION={}'.format(lib_version))
+    cmake_options.append('-DXMS_VERSION="\\"{}\\""'.format(lib_version))
     print("Cmake Options:")    
     for o in cmake_options:
         print("\t{}".format(o))
