@@ -158,13 +158,26 @@ def get_cmake_options(_build_dir):
         conan_options.get('xms', 'False')))
 
     uses_python = conan_options.get('pybind', 'False')
+    is_testing = conan_options.get('testing', 'False')
     if uses_python != 'False':
         python_target_version = input('Target Python Version [3.6]:') or "3.6"
         cmake_options.append('-DPYTHON_TARGET_VERSION={}'.format(
             python_target_version
         ))
+    elif is_testing != 'False':
+        test_files = input('Path to test files [..\\test_files]:') or "..\\test_files"
+        if not os.path.isdir(test_files):
+            print("Specified path to test files does not exist! Aborting...")
+            exit(1)
+        else:
+            test_files = os.path.abspath(test_files)
+        cmake_options.append('-DXMS_TEST_PATH={}'.format(
+            test_files
+        ))
+
     lib_version = input('Library Version [99.99.99]:') or "99.99.99"
-    cmake_options.append('-DXMS_VERSION="{}"'.format(lib_version))
+    cmake_options.append('-DXMS_VERSION={}'.format(lib_version))
+
     print("Cmake Options:")    
     for o in cmake_options:
         print("\t{}".format(o))

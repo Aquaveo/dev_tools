@@ -27,6 +27,6 @@ xmsextractor:xms=True
 xmsextractor:pybind=False
 xmsextractor:testing=False
 
-xmstamper:xms=True
-xmstamper:pybind=False
-xmstamper:testing=False
+xmsstamper:xms=True
+xmsstamper:pybind=False
+xmsstamper:testing=False
