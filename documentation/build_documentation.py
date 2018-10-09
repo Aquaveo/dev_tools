@@ -94,7 +94,12 @@ def build_docs(_doxygen_dir, _sphinx_dir):
     print(_doxygen_dir)
     print(_sphinx_dir)
 
-    cmd_doxygen = ['doxygen']
+    doxygen_exe = os.path.join(
+        os.path.abspath(os.path.dirname(__file__)),
+        'doxygen'
+    )
+
+    cmd_doxygen = [doxygen_exe]
     pydocs_output = os.path.join(_doxygen_dir, "html", "pydocs")
     cmd_sphinx = [
         'sphinx-build', '-b', 'html', '-W',

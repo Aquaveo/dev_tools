@@ -166,14 +166,17 @@ def get_cmake_options(_build_dir):
         ))
     elif is_testing != 'False':
         test_files = input('Path to test files [..\\test_files]:') or "..\\test_files"
-        if not os.path.isdir(test_files):
+        has_test_files = test_files != 'NONE'
+        if not os.path.isdir(test_files) and has_test_files:
             print("Specified path to test files does not exist! Aborting...")
             exit(1)
         else:
             test_files = os.path.abspath(test_files)
-        cmake_options.append('-DXMS_TEST_PATH={}'.format(
-            test_files
-        ))
+
+        if has_test_files:
+            cmake_options.append('-DXMS_TEST_PATH={}'.format(
+                test_files
+            ))
 
     lib_version = input('Library Version [99.99.99]:') or "99.99.99"
     cmake_options.append('-DXMS_VERSION={}'.format(lib_version))
