@@ -98,18 +98,18 @@ def get_args():
             or parsed_args.profile or not parsed_args.generator:
         parsed_args.cmake_dir = input("CMakeList.txt location [{}]:".format(
             parsed_args.cmake_dir or '.'
-        )) or '.'
+        )) or parsed_args.cmake_dir or '.'
         parsed_args.build_dir = input("build location [{}]:".format(
             parsed_args.build_dir or '.'
-        )) or '.'
+        )) or parsed_args.build_dir or  '.'
         print("Available Profiles: {}".format(', '.join(precompile_profiles.keys())))
         parsed_args.profile = input("profile [{}]:".format(
             parsed_args.profile or '.\\default'
-        )) or '.\\default'
+        )) or parsed_args.profile or '.\\default'
         print("Available Generators: {}".format(', '.join(GENERATORS.keys())))
         parsed_args.generator = input("generator [{}]".format(
             parsed_args.generator or 'make'
-        )) or 'make'
+        )) or parsed_args.generator or 'make'
 
         parsed_args.cmake_dir = is_dir(parsed_args.cmake_dir)
         parsed_args.build_dir = is_dir(parsed_args.build_dir)
