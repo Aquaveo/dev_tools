@@ -13,7 +13,6 @@ GENERATORS = {
     'vs2015': 'Visual Studio 14 2015 Win64',
 }
 
-
 def is_dir(_dir_name):
     """
     Check if the given directory is actually a directory
@@ -81,6 +80,10 @@ def get_args():
         dest='generator', type=str, nargs='?',
         help='files to generate. (vs2013, vs2015, or make)'
     )
+    arguments.add_argument(
+        '-g', '-gui', dest='use_gui', action='store_true',
+        help='use gui interface'
+    )
     parsed_args = arguments.parse_args()
 
     # Profiles
@@ -137,6 +140,7 @@ def conan_install(_profile, _cmake_dir, _build_dir):
     ])
     os.system("pause")
 
+
 def get_cmake_options(_build_dir):
     print("------------------------------------------------------------------")
     print(" Setting up cmake options")
@@ -165,7 +169,7 @@ def get_cmake_options(_build_dir):
             python_target_version
         ))
     elif is_testing != 'False':
-        test_files = input('Path to test files [..\\test_files]:') or "..\\test_files"
+        test_files = input('Path to test files [.\\test_files]:') or ".\\test_files"
         has_test_files = test_files != 'NONE'
         if not os.path.isdir(test_files) and has_test_files:
             print("Specified path to test files does not exist! Aborting...")
@@ -186,6 +190,7 @@ def get_cmake_options(_build_dir):
         print("\t{}".format(o))
     os.system("pause")
     return cmake_options
+
 
 def run_cmake(_cmake_dir, _build_dir, _generator, _cmake_options):
     print("------------------------------------------------------------------")
