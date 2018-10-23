@@ -19,20 +19,28 @@ if __name__ == "__main__":
     parser.add_argument('-v', '--version', type=str, default='99.99.99',
                         help='The package version'
                         )
+    parser.add_argument('-w', '--windows', action='store_true',
+                        help='The package version'
+                        )
 
     parser.add_argument('name', type=str, 
                         help='The name of the package'
                         )
     args = parser.parse_args()
 
-    os.environ["CONAN_ARCHS"] = args.archs
-    os.environ["CONAN_BUILD_TYPES"] = args.build_types
-    os.environ["CONAN_CHANNEL"] = args.channel
-    os.environ["CONAN_REFERENCE"] = f"{args.name}/{args.version}"
-    os.environ["CONAN_USERNAME"] = "aquaveo"
-    os.environ["XMS_VERSION"] = args.version
+    if args.windows:
+        export_cmd = "set"
+        outfile = "set_env.bat"
+    else:
+        export_cmd = "export"
+        outfile = "set_env.sh"
 
-    print("Current CONAN Environmental Variables:")
-    for key, value in os.environ.items():
-        if "CONAN" in key:
-            print(f"{key}: {value}")
+    with open(outfile, 'w+') as f:
+        print(f"{export_cmd} CONAN_ARCHS={args.archs}", file=f)
+        print(f"{export_cmd} CONAN_BUILD_TYPES={args.build_types}", file=f)
+        print(f"{export_cmd} CONAN_CHANNEL={args.channel}", file=f)
+        print(f'{export_cmd} CONAN_REFERENCE="{args.name}/{args.version}"', file=f)
+        print(f'{export_cmd} CONAN_USERNAME="aquaveo"', file=f)
+        print(f"{export_cmd} XMS_VERSION={args.version}", file=f)
+
+    print(f"Environment file generated. Please source '{outfile}' in your current shell.")

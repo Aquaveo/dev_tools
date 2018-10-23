@@ -17,7 +17,8 @@
 doc/_build*
 
 # Build Files
-build/
+building/set_env.bat
+building/set_env.sh
 
 # Compiled Object files
 *.slo
