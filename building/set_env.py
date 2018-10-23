@@ -39,8 +39,8 @@ if __name__ == "__main__":
         print(f"{export_cmd} CONAN_ARCHS={args.archs}", file=f)
         print(f"{export_cmd} CONAN_BUILD_TYPES={args.build_types}", file=f)
         print(f"{export_cmd} CONAN_CHANNEL={args.channel}", file=f)
-        print(f'{export_cmd} CONAN_REFERENCE="{args.name}/{args.version}"', file=f)
-        print(f'{export_cmd} CONAN_USERNAME="aquaveo"', file=f)
+        print(f'{export_cmd} CONAN_REFERENCE={args.name}/{args.version}', file=f)
+        print(f'{export_cmd} CONAN_USERNAME=aquaveo', file=f)
         print(f"{export_cmd} XMS_VERSION={args.version}", file=f)
 
     print(f"Environment file generated. Please source '{outfile}' in your current shell.")
