@@ -95,7 +95,7 @@ def build_docs(_doxygen_dir, _sphinx_dir):
     print(_sphinx_dir)
 
     doxygen_exe = os.path.join(
-        os.path.abspath(os.path.dirname(__file__)),
+        #os.path.abspath(os.path.dirname(__file__)),
         'doxygen'
     )
 
