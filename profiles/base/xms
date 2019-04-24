@@ -30,3 +30,7 @@ xmsextractor:testing=False
 xmsstamper:xms=True
 xmsstamper:pybind=False
 xmsstamper:testing=False
+
+xmsconstraint:xms=True
+xmsconstraint:pybind=False
+xmsconstraint:testing=False

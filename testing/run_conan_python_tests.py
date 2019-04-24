@@ -133,6 +133,8 @@ def run_tests(_test_dir, _bin_dir, _conan_file):
     for path in python_paths:
         sys.path.append(path)
     sys.path.append(_bin_dir)
+    if os.path.isdir("_package"):
+        sys.path.append(os.path.realpath("_package"))
     l = unittest.TestLoader()
     tests = l.discover(start_dir=_test_dir, pattern="*_pyt.py")
     test_results = unittest.TextTestRunner(verbosity=2).run(tests)
