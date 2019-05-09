@@ -11,6 +11,10 @@ xmsmesh:xms=False
 xmsmesh:pybind=True
 xmsmesh:testing=False
 
+xmsmesher:xms=False
+xmsmesher:pybind=True
+xmsmesher:testing=False
+
 xmsgrid:xms=False
 xmsgrid:pybind=True
 xmsgrid:testing=False

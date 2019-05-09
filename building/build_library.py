@@ -65,24 +65,32 @@ def get_args():
     """    
     arguments = argparse.ArgumentParser(description="Run Conan Python tests.")
     arguments.add_argument(
-        dest='cmake_dir', type=str, nargs='?',
+        '-cmake_dir', '-cd', type=str, nargs='?',
         help='location of CMakeList.txt'
     )
     arguments.add_argument(
-        dest='build_dir', type=str, nargs='?',
+        '-build_dir', '-bd', type=str, nargs='?',
         help='location of build files'
     )
     arguments.add_argument(
-        dest='profile', type=str, nargs='?',
+        '-profile', '-p', type=str, nargs='?',
         help='profile to build'
     )
-    arguments.add_argument( 
-        dest='generator', type=str, nargs='?',
+    arguments.add_argument(
+        '-generator', '-gen', type=str, nargs='?',
         help='files to generate. (vs2013, vs2015, or make)'
     )
     arguments.add_argument(
         '-g', '-gui', dest='use_gui', action='store_true',
         help='use gui interface'
+    )
+    arguments.add_argument(
+        '-python_version', '-pv', type=str, nargs='?',
+        help='version for python'
+    )
+    arguments.add_argument(
+        '-xms_version', '-xv', type=str, nargs='?',
+        help='version for xms'
     )
     parsed_args = arguments.parse_args()
 
@@ -141,13 +149,13 @@ def conan_install(_profile, _cmake_dir, _build_dir):
     os.system("pause")
 
 
-def get_cmake_options(_build_dir):
+def get_cmake_options(args):
     print("------------------------------------------------------------------")
     print(" Setting up cmake options")
     print("------------------------------------------------------------------")
     conan_options = {}
     conan_option_re = r'(pybind|testing|xms){1}=(True|False)'
-    conan_info_file = os.path.join(_build_dir, 'conaninfo.txt')
+    conan_info_file = os.path.join(args.build_dir, 'conaninfo.txt')
     with open(conan_info_file, 'r') as cf:
         for line in cf.readlines():
             o = re.search(conan_option_re, line)
@@ -161,13 +169,16 @@ def get_cmake_options(_build_dir):
     cmake_options.append('-DXMS_BUILD={}'.format(
         conan_options.get('xms', 'False')))
     cmake_options.append('-DCMAKE_INSTALL_PREFIX={}'.format(
-        os.path.join(_build_dir, "install")
+        os.path.join(args.build_dir, "install.")
     ))
 
     uses_python = conan_options.get('pybind', 'False')
     is_testing = conan_options.get('testing', 'False')
     if uses_python != 'False':
-        python_target_version = input('Target Python Version [3.6]:') or "3.6"
+        if args.python_version:
+            python_target_version = args.python_version
+        else:
+            python_target_version = input('Target Python Version [3.6]:') or "3.6"
         cmake_options.append('-DPYTHON_TARGET_VERSION={}'.format(
             python_target_version
         ))
@@ -185,7 +196,10 @@ def get_cmake_options(_build_dir):
                 test_files
             ))
 
-    lib_version = input('Library Version [99.99.99]:') or "99.99.99"
+    if args.xms_version:
+        lib_version = args.xms_version
+    else:
+        lib_version = input('Library Version [99.99.99]:') or "99.99.99"
     cmake_options.append('-DXMS_VERSION={}'.format(lib_version))
 
     print("Cmake Options:")    
@@ -212,5 +226,5 @@ def run_cmake(_cmake_dir, _build_dir, _generator, _cmake_options):
 if __name__ == "__main__":
     args = get_args()
     conan_install(args.profile, args.cmake_dir, args.build_dir)
-    my_cmake_options = get_cmake_options(args.build_dir)
+    my_cmake_options = get_cmake_options(args)
     run_cmake(args.cmake_dir, args.build_dir, args.generator, my_cmake_options)
