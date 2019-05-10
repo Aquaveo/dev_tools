@@ -169,7 +169,7 @@ def get_cmake_options(args):
     cmake_options.append('-DXMS_BUILD={}'.format(
         conan_options.get('xms', 'False')))
     cmake_options.append('-DCMAKE_INSTALL_PREFIX={}'.format(
-        os.path.join(args.build_dir, "install.")
+        os.path.join(args.build_dir, "install")
     ))
 
     uses_python = conan_options.get('pybind', 'False')
