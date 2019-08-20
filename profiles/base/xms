@@ -38,3 +38,7 @@ xmsstamper:testing=False
 xmsconstraint:xms=True
 xmsconstraint:pybind=False
 xmsconstraint:testing=False
+
+xmssnap:xms=True
+xmssnap:pybind=False
+xmssnap:testing=False

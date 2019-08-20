@@ -131,7 +131,9 @@ def run_tests(_test_dir, _bin_dir, _conan_file):
     print("------------------------------------------------------------------")
     python_paths = get_python_paths_for_conan_packages(_conan_file)
     for path in python_paths:
+        print(path)
         sys.path.append(path)
+    print(_bin_dir)
     sys.path.append(_bin_dir)
     if os.path.isdir("_package"):
         sys.path.append(os.path.realpath("_package"))
