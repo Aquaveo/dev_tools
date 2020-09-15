@@ -1,0 +1,3 @@
+include(../base/vs_2019)
+include(../base/release)
+include(../base/x64)

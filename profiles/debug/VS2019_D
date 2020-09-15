@@ -1,0 +1,3 @@
+include(../base/vs_2015)
+include(../base/debug)
+include(../base/x64)
