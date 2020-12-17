@@ -1,0 +1,5 @@
+[settings]
+compiler=Visual Studio
+compiler.version=16
+os=Windows
+cppstd=17
