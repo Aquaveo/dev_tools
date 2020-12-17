@@ -11,6 +11,7 @@ GENERATORS = {
     'make': None,
     'vs2013': 'Visual Studio 12 2013 Win64',
     'vs2015': 'Visual Studio 14 2015 Win64',
+	'vs2019': 'Visual Studio 16 2019',
 }
 
 def is_dir(_dir_name):
