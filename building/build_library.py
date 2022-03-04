@@ -143,6 +143,7 @@ def conan_install(_profile, _cmake_dir, _build_dir):
     print("------------------------------------------------------------------")
     print(" Generating conan info")
     print("------------------------------------------------------------------")
+    print(_profile)
     subprocess.call([
         'conan', 'install', '-if', _build_dir,
         '-pr', _profile, _cmake_dir
@@ -155,7 +156,7 @@ def get_cmake_options(args):
     print(" Setting up cmake options")
     print("------------------------------------------------------------------")
     conan_options = {}
-    conan_option_re = r'(pybind|testing|xms){1}=(True|False)'
+    conan_option_re = r'(pybind|testing|wchar_t){1}=(True|False)'
     conan_info_file = os.path.join(args.build_dir, 'conaninfo.txt')
     with open(conan_info_file, 'r') as cf:
         for line in cf.readlines():
@@ -168,7 +169,7 @@ def get_cmake_options(args):
     cmake_options.append('-DIS_PYTHON_BUILD={}'.format(
         conan_options.get('pybind', 'False')))
     cmake_options.append('-DXMS_BUILD={}'.format(
-        conan_options.get('xms', 'False')))
+        conan_options.get('wchar_t', 'False')))
     cmake_options.append('-DCMAKE_INSTALL_PREFIX={}'.format(
         os.path.join(args.build_dir, "install")
     ))
