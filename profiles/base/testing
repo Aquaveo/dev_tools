@@ -1,44 +1,44 @@
 [options]
-xmscore:xms=False
+xmscore:wchar_t=builtin
 xmscore:pybind=False
 xmscore:testing=True
 
-xmsinterp:xms=False
+xmsinterp:wchar_t=builtin
 xmsinterp:pybind=False
 xmsinterp:testing=True
 
-xmsmesh:xms=False
+xmsmesh:wchar_t=builtin
 xmsmesh:pybind=False
 xmsmesh:testing=True
 
-xmsmesher:xms=False
+xmsmesher:wchar_t=builtin
 xmsmesher:pybind=False
 xmsmesher:testing=True
 
-xmsgrid:xms=False
+xmsgrid:wchar_t=builtin
 xmsgrid:pybind=False
 xmsgrid:testing=True
 
-xmsgeom:xms=False
+xmsgeom:wchar_t=builtin
 xmsgeom:pybind=False
 xmsgeom:testing=True
 
-xmsgridtrace:xms=False
+xmsgridtrace:wchar_t=builtin
 xmsgridtrace:pybind=False
 xmsgridtrace:testing=True
 
-xmsextractor:xms=False
+xmsextractor:wchar_t=builtin
 xmsextractor:pybind=False
 xmsextractor:testing=True
 
-xmsstamper:xms=False
+xmsstamper:wchar_t=builtin
 xmsstamper:pybind=False
 xmsstamper:testing=True
 
-xmsconstraint:xms=False
+xmsconstraint:wchar_t=builtin
 xmsconstraint:pybind=False
 xmsconstraint:testing=True
 
-xmssnap:xms=False
+xmssnap:wchar_t=builtin
 xmssnap:pybind=False
 xmssnap:testing=True
