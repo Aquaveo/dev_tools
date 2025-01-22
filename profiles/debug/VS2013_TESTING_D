@@ -1,4 +1,0 @@
-include(../base/vs_2013)
-include(../base/debug)
-include(../base/x64)
-include(../base/testing)

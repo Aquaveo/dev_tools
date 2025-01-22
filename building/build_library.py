@@ -9,8 +9,6 @@ import subprocess
 
 GENERATORS = {
     'make': None,
-    'vs2013': 'Visual Studio 12 2013 Win64',
-    'vs2015': 'Visual Studio 14 2015 Win64',
 	'vs2019': 'Visual Studio 16 2019',
 }
 
@@ -81,10 +79,10 @@ def get_args():
         '-generator', '-gen', type=str, nargs='?',
         help='files to generate. (vs2013, vs2015, or make)'
     )
-    arguments.add_argument(
-        '-g', '-gui', dest='use_gui', action='store_true',
-        help='use gui interface'
-    )
+    # arguments.add_argument(
+    #     '-g', '-gui', dest='use_gui', action='store_true',
+    #     help='use gui interface'
+    # )
     arguments.add_argument(
         '-python_version', '-pv', type=str, nargs='?',
         help='version for python'
@@ -145,7 +143,7 @@ def conan_install(_profile, _cmake_dir, _build_dir):
     print("------------------------------------------------------------------")
     print(_profile)
     subprocess.call([
-        'conan', 'install', '-if', _build_dir,
+        'conan', 'install', '-of', _build_dir,
         '-pr', _profile, _cmake_dir
     ])
     os.system("pause")
@@ -156,13 +154,7 @@ def get_cmake_options(args):
     print(" Setting up cmake options")
     print("------------------------------------------------------------------")
     conan_options = {}
-    conan_option_re = r'(pybind|testing|wchar_t){1}=(True|False)'
-    conan_info_file = os.path.join(args.build_dir, 'conaninfo.txt')
-    with open(conan_info_file, 'r') as cf:
-        for line in cf.readlines():
-            o = re.search(conan_option_re, line)
-            if o:
-                conan_options[o.group(1)] = o.group(2)
+
     cmake_options = []
     cmake_options.append('-DBUILD_TESTING={}'.format(
         conan_options.get('testing', 'False')))
@@ -204,6 +196,13 @@ def get_cmake_options(args):
         lib_version = input('Library Version [99.99.99]:') or "99.99.99"
     cmake_options.append('-DXMS_VERSION={}'.format(lib_version))
 
+    # Extra toolchains
+    exta_toolchains = [
+        'build/build/generators/conan_toolchain.cmake',
+    ]
+    for tc in exta_toolchains:
+        cmake_options.append(f'-DCMAKE_TOOLCHAIN_FILE={tc}')
+    
     print("Cmake Options:")    
     for o in cmake_options:
         print("\t{}".format(o))
@@ -220,8 +219,8 @@ def run_cmake(_cmake_dir, _build_dir, _generator, _cmake_options):
     if gen:
         cmd += ['-G', '{}'.format(gen)]
     cmd += _cmake_options
-    cmd.append(_cmake_dir)
-    os.chdir(_build_dir)
+    cmd += ['-S', _cmake_dir, '-B', _build_dir]
+    print(' '.join(cmd))
     subprocess.run(cmd)
     os.system("pause")
 

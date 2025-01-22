@@ -1,3 +1,0 @@
-include(../base/vs_2015)
-include(../base/release)
-include(../base/x64)
