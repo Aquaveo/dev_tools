@@ -153,7 +153,22 @@ def get_cmake_options(args):
     print("------------------------------------------------------------------")
     print(" Setting up cmake options")
     print("------------------------------------------------------------------")
-    conan_options = {}
+    conan_options = {
+        'testing': 'False',
+        'pybind': 'False',
+        'wchar_t': 'False'
+    }
+
+    profile = os.path.basename(args.profile)
+    print(profile)
+    if 'testing' in profile.lower():
+        conan_options['testing'] = 'True'
+
+    if 'pybind' in profile.lower():
+        conan_options['pybind'] = 'True'
+
+    if 'wchar_t' in profile.lower():
+        conan_options['wchar_t'] = 'True'
 
     cmake_options = []
     cmake_options.append('-DBUILD_TESTING={}'.format(

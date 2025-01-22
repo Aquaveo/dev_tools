@@ -1,4 +1,8 @@
 [options]
+pybind=True
+testing=False
+wchar_t=builtin
+
 xmscore/*:*wchart=builtin
 xmscore/*:*pybind=True
 xmscore/*:*testing=False
@@ -42,3 +46,6 @@ xmsconstraint/*:*testing=False
 xmssnap/*:*wchart=builtin
 xmssnap/*:*pybind=True
 xmssnap/*:*testing=False
+
+[buildenv]
+IS_PYTHON_BUILD=True
