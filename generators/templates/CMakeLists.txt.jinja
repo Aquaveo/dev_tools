@@ -132,8 +132,6 @@ if (BUILD_TESTING)
 {% endif %}
     find_package(cxxtest REQUIRED)
     list(APPEND EXT_INCLUDE_DIRS ${cxxtest_INCLUDE_DIRS})
-    list(APPEND EXT_LIB_DIRS ${cxxtest_LIBRARY_DIRS})
-    list(APPEND EXT_LIBS ${cxxtest_LIBRARIES})
 
     if (cxxtest_FOUND)
         include("FindCxxTest")

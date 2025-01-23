@@ -9,6 +9,7 @@ import subprocess
 
 GENERATORS = {
     'make': None,
+    'ninja': 'Ninja',
 	'vs2019': 'Visual Studio 16 2019',
 }
 
@@ -61,7 +62,7 @@ def get_args():
 
     Raises:
         TypeError: If any of the arguments are not the correct type
-    """    
+    """
     arguments = argparse.ArgumentParser(description="Run Conan Python tests.")
     arguments.add_argument(
         '-cmake_dir', '-cd', type=str, nargs='?',
@@ -144,7 +145,7 @@ def conan_install(_profile, _cmake_dir, _build_dir):
     print(_profile)
     subprocess.call([
         'conan', 'install', '-of', _build_dir,
-        '-pr', _profile, _cmake_dir
+        '-pr', _profile, _cmake_dir, '--build=missing'
     ])
     os.system("pause")
 
@@ -192,7 +193,7 @@ def get_cmake_options(args):
             python_target_version
         ))
     elif is_testing != 'False':
-        test_files = input('Path to test files [.\\test_files]:') or ".\\test_files"
+        test_files = input('Path to test files [./test_files]:') or "./test_files"
         has_test_files = test_files != 'NONE'
         if not os.path.isdir(test_files) and has_test_files:
             print("Specified path to test files does not exist! Aborting...")
@@ -217,8 +218,8 @@ def get_cmake_options(args):
     ]
     for tc in exta_toolchains:
         cmake_options.append(f'-DCMAKE_TOOLCHAIN_FILE={tc}')
-    
-    print("Cmake Options:")    
+
+    print("Cmake Options:")
     for o in cmake_options:
         print("\t{}".format(o))
     os.system("pause")
